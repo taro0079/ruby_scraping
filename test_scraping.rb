@@ -21,4 +21,12 @@ class TC_Scraping < Test::Unit::TestCase
   def test_hosyokin
     assert_equal(0, @obj.hosyokin)
   end
+
+  def test_gratuityfee
+    p @obj.gratuityfee
+  end
+
+  def test_expensedeposite
+    p @obj.expensedepositefee
+  end
 end
