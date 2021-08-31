@@ -1,21 +1,21 @@
 require 'nokogiri'
 require 'open-uri'
 
+Properties = Struct.new(
+  :rentfee,
+  :managementfee,
+  :sikikin,
+  :hosyokin,
+  :gratuity_fee,
+  :expense_deposits_fee,
+  :madori_and_area,
+  :address,
+  :renewal_fee,
+  keyword_init: true
+)
+
 class Scraping
   attr_reader :doc, :xpaths
-
-  Properties = Struct.new(
-    :rentfee,
-    :managementfee,
-    :sikikin,
-    :hosyokin,
-    :gratuity_fee,
-    :expense_deposits_fee,
-    :madori_and_area,
-    :address,
-    :renewal_fee,
-    keyword_init: true
-  )
 
   def initialize(url)
     @doc = Nokogiri::HTML(URI.open(url), nil, 'utf-8')
@@ -97,26 +97,11 @@ end
 class TextFormatting
   attr_reader :data
 
-  Properties = Struct.new(
-    :rentfee,
-    :managementfee,
-    :sikikin,
-    :hosyokin,
-    :gratuity_fee,
-    :expense_deposits_fee,
-    :madori_and_area,
-    :address,
-    :renewal_fee,
-    keyword_init: true
-  )
-
   def initialize(data)
     @data = data
   end
 
   private
-
-
 
   # 不要を0に変換
   def huyou_to_zero(data)
