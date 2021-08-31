@@ -24,7 +24,8 @@ class Scraping
       hosyokin: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[3]',
       gratuity_fee: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[5]',
       expense_deposits_fee: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[7]',
-      madori_and_area: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[2]/td[1]'
+      madori_and_area: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[2]/td[1]',
+      address: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[4]/td'
     )
   end
 
@@ -55,6 +56,10 @@ class Scraping
 
   def madori_and_area
     doc.xpath(xpaths[:madori_and_area]).text
+  end
+
+  def address
+    doc.xpath(xpaths[:address]).text
   end
 
   private

@@ -29,4 +29,8 @@ class TC_Scraping < Test::Unit::TestCase
   def test_expensedeposite
     p @obj.expensedepositefee
   end
+
+  def test_address
+    p @obj.address
+  end
 end
