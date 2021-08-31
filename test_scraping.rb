@@ -10,4 +10,8 @@ class TC_Scraping < Test::Unit::TestCase
     item = TextFormatting.new(@obj.allproperties).rent_fee
     assert_equal(40000, item)
   end
+  def test_managementfee
+    item = TextFormatting.new(@obj.allproperties).management_fee
+    assert_equal(6500, item)
+  end
 end

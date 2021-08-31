@@ -104,6 +104,10 @@ class TextFormatting
     data[:rentfee].delete(',').to_i
   end
 
+  def management_fee
+    data[:managementfee].delete(',').delete('¥').to_i
+  end
+
   private
 
   # 不要を0に変換
