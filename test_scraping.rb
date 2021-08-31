@@ -1,17 +1,17 @@
-require "test/unit"
-require "./scraping"
+require 'test/unit'
+require './scraping'
 
 class TC_Scraping < Test::Unit::TestCase
   def setup
-    @obj = Scraping.new("https://www.leopalace21.com/app/searchCondition/detail/r/0000041623105.html#pagetop")
+    @obj = Scraping.new('https://www.leopalace21.com/app/searchCondition/detail/r/0000041623105.html#pagetop')
   end
 
-  def test_rentfee
-    item = TextFormatting.new(@obj.allproperties).rent_fee
-    assert_equal(40000, item)
+  def test_scraping_alldata
+    p @obj.allproperties
   end
-  def test_managementfee
-    item = TextFormatting.new(@obj.allproperties).management_fee
-    assert_equal(6500, item)
+
+  def test_formatting_alldata
+    p TextFormatting.new(@obj.allproperties).allproperties
   end
+
 end

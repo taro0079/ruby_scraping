@@ -45,6 +45,10 @@ class Scraping
     )
   end
 
+  # def mappingalldata
+  #   xpaths.map { |xpath| scraping_data(xpath) }
+  # end
+
   private
 
   def scraping_data(target)
@@ -52,18 +56,14 @@ class Scraping
   end
 
   def rentfee
-    # doc.xpath(xpaths[:rentfee]).text.delete(',').to_i
     scraping_data(xpaths[:rentfee])
   end
 
   def managementfee
-    # doc.xpath(xpaths[:managementfee]).text.delete(',').delete('¥').to_i
     scraping_data(xpaths[:managementfee])
   end
 
   def sikikin
-    # TODO: 処理がおおすぎる。どうにかして切りわけたい。
-    # huyou_to_zero(doc.xpath(xpaths[:sikikin]).text)
     scraping_data(xpaths[:sikikin])
   end
 
@@ -96,6 +96,22 @@ end
 class TextFormatting
   attr_reader :data
 
+  def allproperties
+    Properties.new(
+      rentfee: rent_fee,
+      managementfee: management_fee,
+      sikikin: sikikin,
+      hosyokin: hosyokin
+      # gratuity_fee: gratuityfee
+      # expense_deposits_fee: expensedepositefee,
+      # madori_and_area: madori_and_area,
+      # address: address,
+      # renewal_fee: renewal_fee
+    )
+  end
+
+  private
+
   def initialize(data)
     @data = data
   end
@@ -108,10 +124,16 @@ class TextFormatting
     data[:managementfee].delete(',').delete('¥').to_i
   end
 
-  private
+  def sikikin
+    huyou_to_zero(data[:sikikin])
+  end
+
+  def hosyokin
+    huyou_to_zero(data[:hosyokin])
+  end
 
   # 不要を0に変換
-  def huyou_to_zero(data)
-    return 0 if data.include?('不要')
+  def huyou_to_zero(target)
+    return 0 if target.include?('不要')
   end
 end
