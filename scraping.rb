@@ -16,6 +16,8 @@ Properties = Struct.new(
   :movable_timing,
   :updated_at,
   :new_arrived_at,
+  :building_floor,
+  :specials,
   keyword_init: true
 )
 
@@ -36,7 +38,9 @@ class Scraping
       note: '//*[@id="inquiry-form"]/div[8]/div/table/tbody/tr[6]/td/ul/li',
       movable_timing: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[3]/td[1]',
       updated_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[1]',
-      new_arrived_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[2]'
+      new_arrived_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[2]',
+      building_floor: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[1]/td[2]',
+      specials: '/html/body/div[1]/div[2]/form[1]/div[7]/div/div/ul/li'
     )
   end
 
@@ -54,7 +58,9 @@ class Scraping
       note: note,
       movable_timing: movable_timing,
       updated_at: created_at,
-      new_arrived_at: new_arrived_at
+      new_arrived_at: new_arrived_at,
+      building_floor: building_floor,
+      specials: specials
     )
   end
 
@@ -120,6 +126,14 @@ class Scraping
 
   def new_arrived_at
     scraping_data(xpaths[:new_arrived_at])
+  end
+
+  def building_floor
+    scraping_data(xpaths[:building_floor])
+  end
+
+  def specials
+    doc.xpath(xpaths[:specials]).map { |item| item.text }
   end
 end
 

@@ -7,6 +7,6 @@ class TC_Scraping < Test::Unit::TestCase
   end
 
   def test_created_at
-    p @obj.new_arrived_at
+    p @obj.specials
   end
 end
