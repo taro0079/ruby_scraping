@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 
+# スクレイピングで取るデータの構造体。Hashのほうがいいか迷ってる
 Properties = Struct.new(
   :rentfee,
   :managementfee,
@@ -11,6 +12,8 @@ Properties = Struct.new(
   :madori_and_area,
   :address,
   :renewal_fee,
+  :note,
+  :movable_timing,
   keyword_init: true
 )
 
@@ -27,7 +30,9 @@ class Scraping
       expense_deposits_fee: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[7]',
       madori_and_area: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[2]/td[1]',
       address: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[4]/td',
-      renewal_fee: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[5]/td[1]'
+      renewal_fee: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[5]/td[1]',
+      note: '//*[@id="inquiry-form"]/div[8]/div/table/tbody/tr[6]/td/ul/li',
+      movable_timing: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[3]/td[1]'
     )
   end
 
@@ -41,7 +46,9 @@ class Scraping
       expense_deposits_fee: expensedepositefee,
       madori_and_area: madori_and_area,
       address: address,
-      renewal_fee: renewal_fee
+      renewal_fee: renewal_fee,
+      note: note,
+      movable_timing: movable_timing
     )
   end
 
@@ -68,7 +75,6 @@ class Scraping
   end
 
   def hosyokin
-    # huyou_to_zero(doc.xpath(xpaths[:hosyokin]).text)
     scraping_data(xpaths[:hosyokin])
   end
 
@@ -90,6 +96,16 @@ class Scraping
 
   def renewal_fee
     scraping_data(xpaths[:renewal_fee])
+  end
+
+  def note
+    doc.xpath(xpaths[:note]).map { |item| item.text }
+  end
+
+  public
+
+  def movable_timing
+    scraping_data(xpaths[:movable_timing])
   end
 end
 

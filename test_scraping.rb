@@ -6,12 +6,8 @@ class TC_Scraping < Test::Unit::TestCase
     @obj = Scraping.new('https://www.leopalace21.com/app/searchCondition/detail/r/0000041623105.html#pagetop')
   end
 
-  def test_scraping_alldata
-    p @obj.allproperties
-  end
-
-  def test_formatting_alldata
-    p TextFormatting.new(@obj.allproperties).allproperties
+  def test_note
+    p @obj.movable_timing
   end
 
 end
