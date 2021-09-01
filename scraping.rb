@@ -18,15 +18,18 @@ Properties = Struct.new(
   :new_arrived_at,
   :building_floor,
   :specials,
+  :specials2,
+  :room_number,
   keyword_init: true
 )
 
 class Scraping
-  attr_reader :doc, :xpaths
+  attr_reader :doc, :xpaths, :url
 
   def initialize(url)
+    @url = url
     @doc = Nokogiri::HTML(URI.open(url), nil, 'utf-8')
-    @xpaths = Properties.new(
+    @xpaths = {
       rentfee: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[1]/span[1]',
       managementfee: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[1]/span[3]', sikikin: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[2]',
       hosyokin: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[1]/td/div[2]/span[2]/span[3]',
@@ -40,8 +43,9 @@ class Scraping
       updated_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[1]',
       new_arrived_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[2]',
       building_floor: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[1]/td[2]',
-      specials: '/html/body/div[1]/div[2]/form[1]/div[7]/div/div/ul/li'
-    )
+      specials: '/html/body/div[1]/div[2]/form[1]/div[7]/div/div/ul/li',
+      specials2: '/html/body/div[1]/div[2]/form[1]/div[7]/div/ul/li'
+    }
   end
 
   def allproperties
@@ -133,7 +137,9 @@ class Scraping
   end
 
   def specials
-    doc.xpath(xpaths[:specials]).map { |item| item.text }
+    specials1 = doc.xpath(xpaths[:specials]).map { |item| item.text }
+    specials2 = doc.xpath(xpaths[:specials2]).map { |item| item.text }
+    specials1 + specials2
   end
 end
 
