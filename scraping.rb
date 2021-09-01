@@ -14,6 +14,8 @@ Properties = Struct.new(
   :renewal_fee,
   :note,
   :movable_timing,
+  :updated_at,
+  :new_arrived_at,
   keyword_init: true
 )
 
@@ -32,7 +34,9 @@ class Scraping
       address: '/html/body/div[1]/div[2]/form[1]/div[6]/div/div/table/tbody/tr[4]/td',
       renewal_fee: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[5]/td[1]',
       note: '//*[@id="inquiry-form"]/div[8]/div/table/tbody/tr[6]/td/ul/li',
-      movable_timing: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[3]/td[1]'
+      movable_timing: '/html/body/div[1]/div[2]/form[1]/div[8]/div/table/tbody/tr[3]/td[1]',
+      updated_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[1]',
+      new_arrived_at: '/html/body/div[1]/div[2]/form[1]/div[6]/p/span[2]'
     )
   end
 
@@ -48,7 +52,9 @@ class Scraping
       address: address,
       renewal_fee: renewal_fee,
       note: note,
-      movable_timing: movable_timing
+      movable_timing: movable_timing,
+      updated_at: created_at,
+      new_arrived_at: new_arrived_at
     )
   end
 
@@ -102,10 +108,18 @@ class Scraping
     doc.xpath(xpaths[:note]).map { |item| item.text }
   end
 
-  public
-
   def movable_timing
     scraping_data(xpaths[:movable_timing])
+  end
+
+  public
+
+  def updated_at
+    scraping_data(xpaths[:created_at])
+  end
+
+  def new_arrived_at
+    scraping_data(xpaths[:new_arrived_at])
   end
 end
 

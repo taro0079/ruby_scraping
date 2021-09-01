@@ -6,8 +6,7 @@ class TC_Scraping < Test::Unit::TestCase
     @obj = Scraping.new('https://www.leopalace21.com/app/searchCondition/detail/r/0000041623105.html#pagetop')
   end
 
-  def test_note
-    p @obj.movable_timing
+  def test_created_at
+    p @obj.new_arrived_at
   end
-
 end
